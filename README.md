@@ -5,4 +5,4 @@ To run a day: `node Main.js {day}`
 
 To run a day with test input: `node Main.js {day} 1 {test input filename}`
 
-Requires AOC_SESSION_ID={session} in an .env file to fetch missing input files.
+Setting AOC_SESSION_ID={session} in an .env file will allow fetching of missing input files.
