@@ -14,7 +14,7 @@ else{
 
 function loadInput(){
     let FetchInput = require('./Util/FetchInput.js');
-    let loader = new FetchInput();
+    let loader = FetchInput();
 
     loader.day(dayNumber);
 
@@ -27,7 +27,7 @@ function loadInput(){
 function loadTestInput(filename){
     let FetchInput = require('./Util/FetchInput.js');
     let path = './TestInput/' + filename + '.txt';
-    let loader = new FetchInput();
+    let loader = FetchInput();
 
     loader.fromFile(path);
 
@@ -40,7 +40,7 @@ function loadTestInput(filename){
 function runDay(input){
     let dayModulePath = './Days/Day' + dayNumber.toString().padStart(2, '0');
     let DayModule = require(dayModulePath);
-    let day = new DayModule(input);
+    let day = DayModule(input);
 
     day.setup();
     day.partOne();

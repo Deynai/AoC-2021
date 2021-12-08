@@ -1,7 +1,7 @@
 module.exports = function(input){
 
-    var Base = require('./Base.js');
-    var day = new Base;
+    var base = require('./Base.js');
+    var day = base.prototype;
 
     var parsedInput = '';
 

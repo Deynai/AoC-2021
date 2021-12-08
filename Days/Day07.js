@@ -1,7 +1,6 @@
 module.exports = function(input){
 
-    var Base = require('./Base.js');
-    var day = new Base;
+    var day = require('./Base.js');
 
     var parsedInput = '';
 
@@ -17,6 +16,14 @@ module.exports = function(input){
     day.partTwo = function(){
         let distance = findMinimumDistance(parsedInput, sumTriangleDistance);
         console.log(distance);
+    }
+
+    function sumVals(vals){
+        var sum = 0;
+        for(let i = 0; i < vals.length; i++){
+            sum += vals[i];
+        }
+        return sum;
     }
     
     function findMinimumDistance(crabPositions, distanceFunction){
@@ -38,18 +45,18 @@ module.exports = function(input){
         return prevDistance;
     }
 
-    function sumDistance(sortedNumbers, N){
+    function sumDistance(crabPositions, N){
         let sum = 0;
-        for (let i = 0; i < sortedNumbers.length; i++){
-            sum += Math.abs(sortedNumbers[i] - N);
+        for (let i = 0; i < crabPositions.length; i++){
+            sum += Math.abs(crabPositions[i] - N);
         }
         return sum;
     }
 
-    function sumTriangleDistance(sortedNumbers, N){
+    function sumTriangleDistance(crabPositions, N){
         let sum = 0;
-        for (let i = 0; i < sortedNumbers.length; i++){
-            let val = sortedNumbers[i];
+        for (let i = 0; i < crabPositions.length; i++){
+            let val = crabPositions[i];
             sum += (Math.abs(N - val) * (Math.abs(N - val) + 1)) / 2; // triangle numbers: 1 + 2 + 3 + .. + n = n*(n+1)/2
         }
         return sum;

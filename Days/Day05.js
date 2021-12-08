@@ -1,7 +1,6 @@
 module.exports = function(input){
 
-    var Base = require('./Base.js');
-    var day = new Base;
+    var day = require('./Base.js');
 
     var parsedInput; // {s: {x:, y:}, f: {x:, y:}} []
     var minValue;
