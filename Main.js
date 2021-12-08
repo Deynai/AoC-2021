@@ -42,7 +42,12 @@ function runDay(input){
     let DayModule = require(dayModulePath);
     let day = DayModule(input);
 
+    let startTime = performance.now();
     day.setup();
     day.partOne();
     day.partTwo();
+    let endTime = performance.now();
+
+    console.log(`finished in ${(endTime - startTime).toFixed(2)}ms`);
+
 }
