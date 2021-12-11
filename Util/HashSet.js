@@ -24,4 +24,12 @@ module.exports = function HashSet(){
     HashSet.prototype.contains = function(element){
         return this.elements[element] !== undefined;
     }
-}
+
+    HashSet.prototype.forEach = function(callback){
+        for (const property in this.elements){
+            if (!this.elements.hasOwnProperty(property)) { continue; }
+
+            callback(this.elements[property]);
+        }
+    }
+} 

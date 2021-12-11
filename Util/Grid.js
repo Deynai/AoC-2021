@@ -9,6 +9,18 @@ module.exports = function Grid(grid){
         }
     }
 
+    Grid.prototype.height = function(){
+        return this.grid.length;
+    }
+
+    Grid.prototype.width = function(){
+        return grid.length > 0 ? this.grid[0].length : undefined;
+    }
+
+    Grid.prototype.isValid = function(i, j){
+        return i >= 0 && i < this.height() && j >= 0 && j < this.width();
+    }
+
     Grid.prototype.grid = function(){
         return this.grid;
     }

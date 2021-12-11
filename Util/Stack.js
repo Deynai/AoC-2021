@@ -6,6 +6,8 @@ module.exports = function Stack(){
     }
 
     Stack.prototype.pop = function(){
+        if(this.isEmpty) { return undefined; }
+        
         let val = this.elements.at(-1);
         this.elements.splice(-1, 1);
         return val;
