@@ -34,35 +34,42 @@ module.exports = function(input){
 
         val["name"] = name;
         val["isBig"] = isUpper(name);
-        val["isVisited"] = 0;
-        val["isEnd"] = name === "end";
+        val["visited"] = 0;
 
         let node = new Node(val);
         return node;
     }
 
     day.partOne = function(){
-        let allNodes = buildGraph(parsedInput);
-
         let validPaths = [];
-        let startNode = allNodes["start"];
-
-        walkGraphRecurse(startNode, [], allNodes, validPaths, true);
-
+        walkGraph(validPaths, oneVisitOnly = true);
         console.log(validPaths.length);
     }
 
+    day.partTwo = function(){
+        let validPaths = [];
+        walkGraph(validPaths, oneVisitOnly = false);
+        console.log(validPaths.length);
+    }
+
+    function walkGraph(validPaths, oneVisitOnly){
+        let allNodes = buildGraph(parsedInput);
+        let startNode = allNodes["start"];
+        walkGraphRecurse(startNode, [], allNodes, validPaths, oneVisitOnly);
+    }
+
     function walkGraphRecurse(node, path, graph, validPaths, visitedSmallTwice){
-        // end condition
-        if (node.value["isEnd"]){
+        // end conditions
+        if (node.value["name"] == "start" && path.length > 0) { return; }
+        if (node.value["name"] == "end"){
             validPaths.push(path.join(" -> ") + " -> end");
             return;
         }
 
         // update this node to a visited state
-        node.value["isVisited"] += 1;
+        node.value["visited"] += 1;
         path.push(node.value["name"]);
-        if (!node.value["isBig"] && node.value["isVisited"] > 1){
+        if (!node.value["isBig"] && node.value["visited"] > 1){
             visitedSmallTwice = true;
         }
 
@@ -70,12 +77,8 @@ module.exports = function(input){
         let validLinks = [];
         for (let i = 0; i < node.links.length; i++){
             let linkedNode = node.links[i];
-            if(linkedNode.value["name"] == "start") { continue; }
 
-            if(linkedNode.value["isBig"]){
-                validLinks.push(linkedNode);
-            }
-            else if(!linkedNode.value["isVisited"] || !visitedSmallTwice){
+            if(linkedNode.value["isBig"] || !linkedNode.value["visited"] || !visitedSmallTwice){
                 validLinks.push(linkedNode);
             }
         }
@@ -87,22 +90,11 @@ module.exports = function(input){
         }
 
         // undo visited state
-        if(!node.value["isBig"] && node.value["isVisited"] > 1){
+        if(!node.value["isBig"] && node.value["visited"] > 1){
             visitedSmallTwice = false;
         }
         path.splice(-1, 1);
-        node.value["isVisited"] -= 1;
-    }
-
-    day.partTwo = function(){
-        let allNodes = buildGraph(parsedInput);
-
-        let validPaths = [];
-        let startNode = allNodes["start"];
-
-        walkGraphRecurse(startNode, [], allNodes, validPaths, false);
-
-        console.log(validPaths.length);
+        node.value["visited"] -= 1;
     }
 
     function isUpper(text){
