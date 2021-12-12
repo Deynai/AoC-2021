@@ -75,7 +75,7 @@ module.exports = function(input){
     }
 
     day.partTwo = function(){
-        day.setup();
+        day.setup(); 
         let steps = 10000; // we assume it's less than 10,000
         let maxFlashCount = octopi.width() * octopi.height();
 
