@@ -13,6 +13,16 @@ module.exports = function HashSet(){
         }
     }
 
+    HashSet.prototype.tryAdd = function(element){
+        if (this.elements[element] !== undefined) {
+            return false;
+        }
+        else { 
+            this.elements[element] = true;
+            return true; 
+        }
+    }
+
     HashSet.prototype.remove = function(element){
         delete this.elements[element];
     }
