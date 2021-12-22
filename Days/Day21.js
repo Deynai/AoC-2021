@@ -74,7 +74,6 @@ module.exports = function(input){
         if (scores[0] >= 21) { winners[0] += amount; return; }
         if (scores[1] >= 21) { winners[1] += amount; return; }
 
-        // slightly faster to cache current turn values than copy position/score array
         let currPos = positions[turn];
         let currScore = scores[turn];
 
