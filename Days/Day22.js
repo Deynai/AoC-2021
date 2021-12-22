@@ -29,7 +29,7 @@ module.exports = function(input){
         
         for (let i = 0; i < rebootSteps.length; i++){
             let cuboid = rebootSteps[i];
-            if (Math.abs(cuboid.x[0]) > 50 || Math.abs(cuboid.y[0]) > 50 || Math.abs(cuboid.z[0]) > 50) { continue; }
+            if (Math.abs(cuboid.x[0]) > 50 || Math.abs(cuboid.y[0]) > 50 || Math.abs(cuboid.z[0]) > 50) { continue; } // just ignore anything higher for part 1
 
             createNewRegions(cuboid, regions);
         }
@@ -70,10 +70,12 @@ module.exports = function(input){
 
         let newRegions = [];
 
+        // this is our single | C | term.
         if (cuboid.toggle === "on"){
             newRegions.push(createRegion(true, cuboid.x, cuboid.y, cuboid.z));
         }
 
+        // we go through our list of regions and for each R find (R n C), with opposite sign to R.
         for (let i = 0; i < regions.length; i++){
             let region = regions[i];
 
@@ -83,12 +85,15 @@ module.exports = function(input){
             }
         }
 
+        // The new (R n C) regions get added to our list.
         for (let i = 0; i < newRegions.length; i++){
             regions.push(newRegions[i]);
         }
     }
 
     function findIntersection(region, cuboid){
+        // we can find intersections by considering each axis separately.
+        // if a single dimension doesn't overlap, the cuboids don't, and we just return null.
         let xMin = Math.max(region.x[0], cuboid.x[0]);
         let xMax = Math.min(region.x[1], cuboid.x[1]);
         if (xMax < xMin) { return null; }
@@ -118,6 +123,7 @@ module.exports = function(input){
 
         for (let i = 0; i < regions.length; i++){
             let region = regions[i];
+            // inclusive bounds, so add 1 to each dimension, e.g [0,1],[0,1],[0,1] is a 2x2x2 cube.
             let size = (region.x[1] - region.x[0] + 1) * (region.y[1] - region.y[0] + 1) * (region.z[1] - region.z[0] + 1);
             count += region.positive ? size : -size;
         }
